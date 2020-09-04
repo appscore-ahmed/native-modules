@@ -1,6 +1,5 @@
 import * as React from 'react';
-import { StyleSheet, View, Text } from 'react-native';
-// import AwesomeModule from 'react-native-awesome-module';
+import { StyleSheet, View, Text, Button, Alert } from 'react-native';
 import ToastExample from './ToastExample';
 
 export default function App() {
@@ -31,17 +30,20 @@ export default function App() {
         setResultAdd(msg);
         ToastExample.showLonger(`${msg}`);
       },
-      (msg: any) => {
+      (msg: any) => { 
         setResult(msg);
       }
     );
   }, []);
 
   return (
-    <View style={styles.container}>
+    <View style={styles.container} >
       <Text>Result multiply: {result}</Text>
       <Text>Result addition: {resultAdd}</Text>
       <Text>demo text: {text}</Text>
+      <Button title="Click Me" onPress={()=> {
+        ToastExample.callCamera()
+        Alert.alert('button clicked')}}/>
     </View>
   );
 }

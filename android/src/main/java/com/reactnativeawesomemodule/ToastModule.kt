@@ -1,6 +1,9 @@
 package com.reactnativeawesomemodule
+
+import android.content.Intent
 import android.widget.Toast
 import com.facebook.react.bridge.*
+
 class ToastModule(reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
   companion object {
@@ -55,5 +58,12 @@ class ToastModule(reactContext: ReactApplicationContext) :
     } catch (e: Exception) {
       promise.reject(e)
     }
+  }
+
+  @ReactMethod
+  fun callCamera() {
+    val intent = Intent("android.media.action.IMAGE_CAPTURE");
+    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK;
+    reactApplicationContext.startActivity(intent);
   }
 }
