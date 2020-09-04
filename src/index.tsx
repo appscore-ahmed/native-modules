@@ -1,9 +1,10 @@
-import { NativeModules } from 'react-native';
+// import { NativeModules } from 'react-native';
 
-type AwesomeModuleType = {
-  multiply(a: number, b: number): Promise<number>;
-};
+// type AwesomeModuleType = {
+//   multiply(a: number, b: number): Promise<number>;
+//   add(a: number, b: number): Promise<number>;
+// };
 
-const { AwesomeModule } = NativeModules;
+// const { AwesomeModule } = NativeModules;
 
-export default AwesomeModule as AwesomeModuleType;
+// export default AwesomeModule as AwesomeModuleType;
