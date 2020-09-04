@@ -30,20 +30,29 @@ export default function App() {
         setResultAdd(msg);
         ToastExample.showLonger(`${msg}`);
       },
-      (msg: any) => { 
+      (msg: any) => {
         setResult(msg);
       }
     );
   }, []);
 
   return (
-    <View style={styles.container} >
+    <View style={styles.container}>
       <Text>Result multiply: {result}</Text>
       <Text>Result addition: {resultAdd}</Text>
       <Text>demo text: {text}</Text>
-      <Button title="Click Me" onPress={()=> {
-        ToastExample.callCamera()
-        Alert.alert('button clicked')}}/>
+      <Button
+        title="Click Meee"
+        onPress={() => {
+          ToastExample.callCamera()
+            .then((uri: any) => {
+              console.log(uri);
+              setText(uri)
+            })
+            .catch((e: string) => Alert.alert(e));
+          // Alert.alert('button clicked');
+        }}
+      />
     </View>
   );
 }

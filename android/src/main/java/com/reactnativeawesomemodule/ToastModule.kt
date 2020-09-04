@@ -1,11 +1,17 @@
 package com.reactnativeawesomemodule
 
+import android.app.Activity
+import android.app.Activity.RESULT_OK
 import android.content.Intent
+import android.graphics.Bitmap
+import android.util.Log
 import android.widget.Toast
 import com.facebook.react.bridge.*
 
-class ToastModule(reactContext: ReactApplicationContext) :
+class ToastModule
+(reactContext: ReactApplicationContext) :
   ReactContextBaseJavaModule(reactContext) {
+
   companion object {
     private const val DURATION_SHORT_KEY = "SHORT"
     private const val DURATION_LONG_KEY = "LONG"
@@ -60,10 +66,36 @@ class ToastModule(reactContext: ReactApplicationContext) :
     }
   }
 
+  private lateinit var mCameraPromise: Promise
+
+  private val REQUEST_CODE = 1
+
+  private val mActivityEventListener = object : BaseActivityEventListener() {
+
+    override fun onActivityResult(activity: Activity?, requestCode: Int, resultCode: Int, data: Intent?) {
+      super.onActivityResult(activity, requestCode, resultCode, data)
+      Log.e("ASD", "test")
+      if (requestCode == REQUEST_CODE) {
+        val image = data?.extras?.get("data")
+//        val uri = data?.data
+        Log.e("ASD", "image $image")
+//        mCameraPromise.resolve("testttttttttttttt")
+        mCameraPromise.also {
+          if (image != null) it.resolve(image.toString()) else it.reject("error", "errrrrrr")
+        }
+      }
+    }
+  }
+
   @ReactMethod
-  fun callCamera() {
+  fun callCamera(promise: Promise) {
+    mCameraPromise = promise
     val intent = Intent("android.media.action.IMAGE_CAPTURE");
-    intent.flags = Intent.FLAG_ACTIVITY_NEW_TASK;
-    reactApplicationContext.startActivity(intent);
+//    intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP;
+    reactApplicationContext.startActivityForResult(intent, REQUEST_CODE, null);
+  }
+
+  init {
+    reactContext.addActivityEventListener(mActivityEventListener)
   }
 }
