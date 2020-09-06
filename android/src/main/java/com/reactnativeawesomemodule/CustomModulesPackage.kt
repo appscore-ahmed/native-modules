@@ -7,7 +7,7 @@ import com.facebook.react.uimanager.ViewManager
 import java.util.*
 
 
-class CustomToastPackage : ReactPackage {
+class CustomModulesPackage : ReactPackage {
   override fun createViewManagers(reactContext: ReactApplicationContext): List<ViewManager<*, *>> {
     return emptyList()
   }
@@ -16,6 +16,7 @@ class CustomToastPackage : ReactPackage {
     reactContext: ReactApplicationContext): List<NativeModule> {
     val modules: MutableList<NativeModule> = ArrayList()
     modules.add(ToastModule(reactContext))
+    modules.add(CameraModule(reactContext))
     return modules
   }
 }

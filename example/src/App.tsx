@@ -1,6 +1,7 @@
 import * as React from 'react';
 import { StyleSheet, View, Text, Button, Alert, Image } from 'react-native';
-import ToastExample from './ToastExample';
+// import ToastExample from './ToastExample';
+import NativeModule from './CustomModules';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
@@ -23,15 +24,15 @@ export default function App() {
     // AwesomeModule.multiply(19, 7).then(setResult);
     // AwesomeModule.add(2, 3).then(setResultAdd);
 
-    ToastExample.show('test', ToastExample.SHORT);
-    ToastExample.showLonger('message');
+    NativeModule.ToastExample.show('test', NativeModule.ToastExample.SHORT);
+    NativeModule.ToastExample.showLonger('message');
 
-    ToastExample.returnSomeString().then(setText);
-    ToastExample.callbackMethod(
+    NativeModule.ToastExample.returnSomeString().then(setText);
+    NativeModule.ToastExample.callbackMethod(
       23,
       (msg: any) => {
         setResultAdd(msg);
-        ToastExample.showLonger(`${msg}`);
+        NativeModule.ToastExample.showLonger(`${msg}`);
       },
       (msg: any) => {
         setResult(msg);
@@ -47,22 +48,19 @@ export default function App() {
       <Button
         title="Click Meee"
         onPress={() => {
-          ToastExample.callCamera()
+          NativeModule.CameraModule.callCamera()
             .then((uri: string) => {
               console.log(`uri : ${uri}`);
               setImageSource(uri);
+              setText(uri);
             })
             .catch((e: string) => Alert.alert(e));
         }}
       />
-      {/* {!imageSource ? ( */}
       <Image
         // style={styles.stretch}
         source={{ uri: imageSource, width: 200, height: 200 }}
       />
-      {/* ) : ( */}
-      {/* '' */}
-      {/* )} */}
     </View>
   );
 }
