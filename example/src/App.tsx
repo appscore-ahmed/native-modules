@@ -1,11 +1,14 @@
 import * as React from 'react';
-import { StyleSheet, View, Text, Button, Alert } from 'react-native';
+import { StyleSheet, View, Text, Button, Alert, Image } from 'react-native';
 import ToastExample from './ToastExample';
 
 export default function App() {
   const [result, setResult] = React.useState<number | undefined>();
   const [resultAdd, setResultAdd] = React.useState<number | undefined>();
   const [text, setText] = React.useState<string | undefined>();
+  const [imageSource, setImageSource] = React.useState<string>(
+    'file://storage/emulated/0/Pictures/Title.jpg'
+  );
 
   // const promiseTest = async () => {
   //   try {
@@ -45,14 +48,21 @@ export default function App() {
         title="Click Meee"
         onPress={() => {
           ToastExample.callCamera()
-            .then((uri: any) => {
-              console.log(uri);
-              setText(uri)
+            .then((uri: string) => {
+              console.log(`uri : ${uri}`);
+              setImageSource(uri);
             })
             .catch((e: string) => Alert.alert(e));
-          // Alert.alert('button clicked');
         }}
       />
+      {/* {!imageSource ? ( */}
+      <Image
+        // style={styles.stretch}
+        source={{ uri: imageSource, width: 200, height: 200 }}
+      />
+      {/* ) : ( */}
+      {/* '' */}
+      {/* )} */}
     </View>
   );
 }
@@ -62,5 +72,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  stretch: {
+    width: 200,
+    height: 200,
+    resizeMode: 'stretch',
   },
 });
