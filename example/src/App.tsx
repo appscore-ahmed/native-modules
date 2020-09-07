@@ -8,7 +8,7 @@ export default function App() {
   const [resultAdd, setResultAdd] = React.useState<number | undefined>();
   const [text, setText] = React.useState<string | undefined>();
   const [imageSource, setImageSource] = React.useState<string>(
-    'file://storage/emulated/0/Pictures/Title.jpg'
+    'file:///storage/emulated/0/Pictures/Title.jpg'
   );
 
   // const promiseTest = async () => {
@@ -58,8 +58,12 @@ export default function App() {
         }}
       />
       <Image
-        // style={styles.stretch}
-        source={{ uri: imageSource, width: 200, height: 200 }}
+        style={styles.stretch}
+        source={{ uri: imageSource }}
+        // onError={(e)=> console.log('asd', e)}
+        onLoadEnd={() => {
+          console.log('loaded');
+        }}
       />
     </View>
   );
